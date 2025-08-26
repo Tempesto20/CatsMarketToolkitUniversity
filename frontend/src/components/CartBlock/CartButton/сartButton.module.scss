@@ -1,0 +1,41 @@
+@import '../../../scss/config';
+
+.button {
+  cursor: pointer;
+  display: flex;
+  border: 1px solid #000000;
+  border-radius: 50px;
+  padding: 10px;
+  background-color: #c8c8c8;
+  max-width: 220px;
+  position: absolute; /* Фиксированное положение */
+  right: 50px; /* Расстояние от правого края окна браузера */
+  // max-width: 290px;
+  @media (max-width: $xl) {
+    left: 20px;
+  }
+}
+
+.button:hover,
+.button:active {
+  background-color: #a7a5a5;
+}
+
+.icon {
+  max-width: 40px;
+}
+
+.title {
+  font-weight: bold;
+  color: white;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.badge {
+  background-color: #e5e5e5;
+  padding: 10px 10px;
+  border-radius: 30px;
+  text-align: center;
+  font-weight: bold;
+}
