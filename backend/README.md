@@ -10,3 +10,4 @@ nest start
 npm install @nestjs/typeorm typeorm pg
 npm install @nestjs/config
 npm install class-validator class-transformer
+
