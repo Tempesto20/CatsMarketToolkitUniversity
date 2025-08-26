@@ -23,11 +23,11 @@ export class Cat {
   @Column({ length: 50 })
   buy: string;
 
-  @Column({ nullable: true }) 
-  isSell: number;
+  @Column({ name: 'issell' }) 
+  issell: number;
 
   @Column({ default: false })
-  isFavorite: boolean;
+  isfavorite: boolean;
 
   @Column({ length: 100 })
   breed: string;

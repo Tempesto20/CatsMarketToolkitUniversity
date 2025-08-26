@@ -18,8 +18,8 @@ const CatBlock: React.FC<CartItemSlice> = ({
   age,
   discount,
   buy,
-  isFavorite,
-  isSell,
+  isfavorite,
+  issell,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -39,9 +39,9 @@ const CatBlock: React.FC<CartItemSlice> = ({
       price,
       img,
       discount,
-      isFavorite: true,
+      isfavorite: true,
       buy,
-      isSell,
+      issell,
       count: 0,
       breed: '',
       description: '',
@@ -79,12 +79,12 @@ const CatBlock: React.FC<CartItemSlice> = ({
       img,
       discount,
       buy,
-      isSell,
+      issell,
       count: 0,
       breed: '',
       description: '',
       age: 0,
-      isFavorite: false,
+      isfavorite: false,
     };
     dispatch(setAddItem(item));
     //console.log(item)
@@ -150,7 +150,7 @@ const CatBlock: React.FC<CartItemSlice> = ({
 
 export default CatBlock;
 
-// const [like, setLike] = React.useState(isFavorite);
+// const [like, setLike] = React.useState(isfavorite);
 
 // console.log(like)
 // const chengeLikeYes = () => {
@@ -164,19 +164,19 @@ export default CatBlock;
 
 // for(let i=0; i<likeItem.length; i++){
 //   console.log('start id' + ' ' + likeItem[i].id)
-//   console.log('start isFavorite' + ' ' +likeItem[i].isFavorite)
+//   console.log('start isfavorite' + ' ' +likeItem[i].isfavorite)
 //   console.log('lol-1')
 
 //   if(likeItem[i].id === id){
 //     console.log('lol-2')
-//     likeItem[i].isFavorite = true;
-//     // console.log('finish isFavorite' + ' ' +likeItem[i].isFavorite)
-//     console.log('finish isFavorite')
+//     likeItem[i].isfavorite = true;
+//     // console.log('finish isfavorite' + ' ' +likeItem[i].isfavorite)
+//     console.log('finish isfavorite')
 //     dispatch(setLike(true));
 //   } else {
 //   console.log('lol-3')
-//   likeItem[i].isFavorite = true;
-//   console.log('finish isFavorite' + ' ' +likeItem[i].isFavorite)
+//   likeItem[i].isfavorite = true;
+//   console.log('finish isfavorite' + ' ' +likeItem[i].isfavorite)
 //  } return
 // }
 
@@ -203,7 +203,7 @@ export default CatBlock;
 //   <h1>имя {name}</h1>
 //   <b>цена {price}</b>
 //   <b>возраст {age}</b>
-//   <b>лайк {isFavorite}</b>
+//   <b>лайк {isfavorite}</b>
 //   <button onClick={likeHandler}> like </button>
 //   <div style={{ backgroundColor: '#161617', maxWidth: '250px' }}>
 //     {like}

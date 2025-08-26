@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Cat } from './cat.entity';
 import { SearchCatsParams } from './cats.controller';
 
@@ -11,23 +11,35 @@ export class CatsService {
     private catsRepository: Repository<Cat>,
   ) {}
 
-    async findAll(params: SearchCatsParams): Promise<Cat[]> {
-    const { sortBy = 'id', order = 'ASC', currentPage = 1, isSell } = params;
+  async findAll(params: SearchCatsParams): Promise<Cat[]> {
+    const { sortBy = 'id', order = 'ASC', currentPage = 1, issell } = params;
     const limit = 6;
     const skip = (currentPage - 1) * limit;
 
     const queryBuilder = this.catsRepository.createQueryBuilder('cat');
 
-    if (isSell !== undefined) {
-        // Добавьте проверку на NULL если нужно
-        queryBuilder.where('cat.isSell = :isSell OR (cat.isSell IS NULL AND :isSell IS NULL)', { isSell });
+    // Проверяем, что issell является числом, а не пустой строкой
+    if (issell !== undefined && issell !== '' && !isNaN(Number(issell))) {
+      queryBuilder.where('cat.issell = :issell', { issell: Number(issell) });
     }
 
+    const orderDirection = order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    
     queryBuilder
-        .orderBy(`cat.${sortBy}`, order)
-        .skip(skip)
-        .take(limit);
+      .orderBy(`cat.${sortBy}`, orderDirection)
+      .skip(skip)
+      .take(limit);
 
     return queryBuilder.getMany();
+  }
+
+  async findOne(id: number): Promise<Cat> {
+    const cat = await this.catsRepository.findOne({ where: { id } });
+    
+    if (!cat) {
+      throw new NotFoundException(`Cat with ID ${id} not found`);
     }
+    
+    return cat;
+  }
 }

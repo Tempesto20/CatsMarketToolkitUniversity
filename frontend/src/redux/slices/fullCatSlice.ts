@@ -5,16 +5,13 @@ export type SearchCatsParams = {
   id: string | undefined;
 };
 
-// Это бизнес-логика, вынес из UI - в редакс, те це UX
-//Чтобы была возможно повторного использования или исключения
 export const axiosFullCat = createAsyncThunk(
   'fullCatSlice/axiosFullCatStatus',
   async (params: SearchCatsParams) => {
     const { id } = params;
-    const { data } = await axios.get(`https://633db211f2b0e623dc79b585.mockapi.io/cats/` + id);
+    const { data } = await axios.get(`http://localhost:3000/cats/${id}`);
     console.log(data);
-    //   console.log(id);
-    return data as FullCatsItems[];
+    return data as FullCatsItems;
   },
 );
 
@@ -24,56 +21,47 @@ export type FullCatsItems = {
   buy: string;
   description: string;
   discount: number;
-  id: string;
+  id: number; // Измените string на number
   img: string;
-  isFavorite: boolean;
-  isSell: number;
+  isfavorite: boolean;
+  issell: number;
   name: string;
   price: number;
-}
-;
+};
 
 interface CatsSliceState {
-  items: FullCatsItems[];
+  item: FullCatsItems | null;
   status: 'loading' | 'success' | 'error';
 }
 
-// первоначальное состояние
-//Сохранение пицц в реакте
 const initialState: CatsSliceState = {
-  items: [],
-  status: 'loading', // loading | success | error
+  item: null,
+  status: 'loading',
 };
 
 const fullCatSlice = createSlice({
-  name: 'asyncThunkSlice',
+  name: 'fullCatSlice',
   initialState,
   reducers: {
-    setCats(state, action) {
-      state.items = action.payload;
+    setCat(state, action) {
+      state.item = action.payload;
     },
   },
-
   extraReducers: (builder) => {
-    builder.addCase(axiosFullCat.pending, (state, action) => {
-      //console.log(state + 'идёт отправка');
+    builder.addCase(axiosFullCat.pending, (state) => {
       state.status = 'loading';
-      state.items = [];
+      state.item = null;
     });
     builder.addCase(axiosFullCat.fulfilled, (state, action) => {
-      //   console.log(state + 'выполнилось');
-      state.items = action.payload;
+      state.item = action.payload;
       state.status = 'success';
     });
-    builder.addCase(axiosFullCat.rejected, (state, action) => {
-      //console.log('была ошибка');
+    builder.addCase(axiosFullCat.rejected, (state) => {
       state.status = 'error';
-      state.items = [];
+      state.item = null;
     });
   },
 });
-export const { setCats } = fullCatSlice.actions;
-// необходимо для импортирования этой переменной в дром файле
-// чтобы вытащить какие-либо ACTIONS, те reducers = actions;
 
+export const { setCat } = fullCatSlice.actions;
 export default fullCatSlice.reducer;

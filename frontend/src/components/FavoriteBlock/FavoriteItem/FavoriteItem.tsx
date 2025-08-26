@@ -28,14 +28,14 @@ const FavoriteItem: React.FC<CartItemSlice> = ({ id, name, price, img, count, di
       name,
       price,
       img,
-      isFavorite: true,
+      isfavorite: true,
       count: 0,
       buy: '',
       breed: '',
       description: '',
       discount: 0,
       age: 0,
-      isSell: 0,
+      issell: 0,
     };
     // setLike(true); // при использовании useState
     dispatch(setLike(true));
@@ -76,8 +76,8 @@ const FavoriteItem: React.FC<CartItemSlice> = ({ id, name, price, img, count, di
       breed: '',
       description: '',
       age: 0,
-      isSell: 0,
-      isFavorite: false,
+      issell: 0,
+      isfavorite: false,
     };
     // if (window.confirm('Добавить котёнка в корзину?')) {
     dispatch(setAddItem(item));

@@ -20,31 +20,24 @@ const Home: React.FC = () => {
   const currentPage = useSelector((state: RootState) => state.filterSlice.currentPage);
   const cats = useSelector((state: RootState) => state.catsSlice.items);
   const cart = useSelector((state: RootState) => state.cartSlice.items);
-  // const favorite = useSelector((state) => state.favoriteSlice.items);
   const sell = useSelector((state: RootState) => state.filterSlice.sell);
-
   const status = useSelector((state: RootState) => state.catsSlice.status);
-  // console.log(sell)
-
-  // const onCategoriesHandler = React.useCallback((index) => {
-  //   dispatch(setIsSell(index));
-  // }, [dispatch]);
 
   const onChangePageHandler = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
   const getCats = async () => {
-    const sortBy = sortType.replace('-', ''); //убираем минус
-    const order = sortType.includes('-') ? 'asc' : 'desc'; // если есть то -, то выбираем 1 пункт
-    // const isSell = sell.value > 0 ? `isSell=${sell}` : ''; //сортировка
-    const isSell = sell > 0 ? `isSell=${sell}` : ''; //сортировка
+    const sortBy = sortType.replace('-', '');
+    const order = sortType.includes('-') ? 'asc' : 'desc';
+    const issellParam = sell > 0 ? `issell=${sell}` : '';
+    
     dispatch(
       fetchCats({
         sortBy,
         order,
         currentPage,
-        isSell,
+        issell: issellParam,
       }),
     );
   };
@@ -53,7 +46,16 @@ const Home: React.FC = () => {
     getCats();
   }, [sortType, currentPage, sell]);
 
-  const catsArray = cats.map((items, id) => <CatBlock count={0} key={id} {...items} />);
+  // Исправленная строка - преобразуем id в string если нужно
+  const catsArray = cats.map((item) => (
+    <CatBlock 
+      key={item.id} 
+      count={0} 
+      {...item} 
+      // id={item.id} // если CatBlock принимает number
+      // или id={item.id.toString()} // если CatBlock принимает string
+    />
+  ));
 
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
@@ -89,31 +91,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-// https://633db211f2b0e623dc79b585.mockapi.io/cats
-
-//style={{backgroundColor: '#161617'}}
-
-// const cartMounted = React.useRef(false);
-// const favoriteMounted = React.useRef(false);
-// React.useEffect(() => {
-//   if (cartMounted.current) {
-//     // При первом рендере будет FALSE, те не отработает сохранение
-//     const json = JSON.stringify(cart);
-//     // console.log(json)
-//     localStorage.setItem('cart', json);
-//     //  window.localStorage.getItem('cart');
-//   }
-//   cartMounted.current = true;
-// }, [cart]);
-
-// React.useEffect(() => {
-//   if (favoriteMounted.current) {
-//     // При первом рендере будет FALSE, те не отработает сохранение
-//     const json = JSON.stringify(favorite);
-//     console.log(json);
-//     localStorage.setItem('favorite', json);
-//     //  window.localStorage.getItem('favorite');
-//   }
-//   favoriteMounted.current = true;
-// }, [favorite]);

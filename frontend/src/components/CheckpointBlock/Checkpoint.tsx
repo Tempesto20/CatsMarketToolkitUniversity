@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/store';
-import { setIsSell } from '../../redux/slices/filterSlice';
+import { setissell } from '../../redux/slices/filterSlice';
 import styles from './checkpoint.module.scss';
 
 const checkpointList = ['Все', 'В наличии', 'Отсутсвуют в продаже'];
@@ -9,14 +9,14 @@ const Checkpoint: React.FC = () => {
   const dispatch = useAppDispatch();
   // const [value, setValue] = React.useState(0);
   const sell = useSelector((state: RootState) => state.filterSlice.sell);
-  console.log('sell' + ' ' + sell);
+  // console.log('sell' + ' ' + sell);
   // const arr = useSelector((state) => state.catsSlice.items);
   // console.log(arr);
 
   const checkboxHandler = (event: any) => {
-    console.log('event' + ' ' + event.target.value);
-    dispatch(setIsSell(event.target.value));
-    // dispatch(setIsSell({
+    // console.log('event' + ' ' + event.target.value);
+    dispatch(setissell(event.target.value));
+    // dispatch(setissell({
     //   ...sell,
     //   sell : event.target.value
     // }));

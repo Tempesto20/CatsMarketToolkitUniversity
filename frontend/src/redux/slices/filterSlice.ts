@@ -38,10 +38,10 @@ const filterSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    setIsSell(state, action: PayloadAction<number>) {
+    setissell(state, action: PayloadAction<number>) {
       state.sell = action.payload;
     },
-    // setIsSell(state, action: PayloadAction<SellProps>) {
+    // setissell(state, action: PayloadAction<SellProps>) {
     //   state.sell = action.payload;
     // },
     setSortType(state, action: PayloadAction<SortProps>) {
@@ -68,6 +68,6 @@ const filterSlice = createSlice({
   },
 });
 
-export const { setIsSell, setSortType, setCurrentPage } = filterSlice.actions;
+export const { setissell, setSortType, setCurrentPage } = filterSlice.actions;
 
 export default filterSlice.reducer;

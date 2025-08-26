@@ -3,31 +3,36 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { SellProps } from './filterSlice';
 
 export type SearchCatsParams = {
-  // id:string;
   sortBy: string;
   order: string;
   currentPage: number;
-  isSell: string | number;
-  // isSell: SellProps;
+  issell: string | number;
 };
 
-// Это бизнес-логика, вынес из UI - в редакс, те це UX
-//Чтобы была возможно повторного использования или исключения
 export const fetchCats = createAsyncThunk(
   'cats/fetchCatsStatus',
   async (params: SearchCatsParams) => {
-    const { sortBy, order, currentPage, isSell } = params;
-    const { data } = await axios.get(
-      `https://633db211f2b0e623dc79b585.mockapi.io/cats?page=${currentPage}&limit=6&${isSell}&sortBy=${sortBy}&order=${order}`,
-    );
-
-    // console.log(data);
+    const { sortBy, order, currentPage, issell } = params;
+    
+    // Убедитесь, что issell передается как число, а не как строка
+    const issellParam = issell === 'all' || issell === '' ? undefined : Number(issell);
+    
+    const { data } = await axios.get(`http://localhost:3000/cats`, {
+      params: {
+        sortBy,
+        order,
+        currentPage,
+        issell: issellParam
+      }
+    });
+    
+    console.log('Response data:', data);
     return data as CatsItems[];
   },
 );
 
-type CatsItems = {
-  id: string;
+export type CatsItems = {
+  id: number; // Измените string на number
   img: string;
   name: string;
   buy: string;
@@ -36,8 +41,8 @@ type CatsItems = {
   discount: number;
   price: number;
   age: number;
-  isSell: number;
-  isFavorite: boolean;
+  issell: number;
+  isfavorite: boolean;
 };
 
 interface CatsSliceState {
@@ -45,11 +50,9 @@ interface CatsSliceState {
   status: 'loading' | 'success' | 'error';
 }
 
-// первоначальное состояние
-//Сохранение пицц в реакте
 const initialState: CatsSliceState = {
   items: [],
-  status: 'loading', // loading | success | error
+  status: 'loading',
 };
 
 const catsSlice = createSlice({
@@ -60,27 +63,21 @@ const catsSlice = createSlice({
       state.items = action.payload;
     },
   },
-
   extraReducers: (builder) => {
-    builder.addCase(fetchCats.pending, (state, action) => {
-      //console.log(state + 'идёт отправка');
+    builder.addCase(fetchCats.pending, (state) => {
       state.status = 'loading';
       state.items = [];
     });
     builder.addCase(fetchCats.fulfilled, (state, action) => {
-      // console.log(state + 'выполнилось');
       state.items = action.payload;
       state.status = 'success';
     });
-    builder.addCase(fetchCats.rejected, (state, action) => {
-      //console.log('была ошибка');
+    builder.addCase(fetchCats.rejected, (state) => {
       state.status = 'error';
       state.items = [];
     });
   },
 });
-export const { setCats } = catsSlice.actions;
-// необходимо для импортирования этой переменной в дром файле
-// чтобы вытащить какие-либо ACTIONS, те reducers = actions;
 
+export const { setCats } = catsSlice.actions;
 export default catsSlice.reducer;

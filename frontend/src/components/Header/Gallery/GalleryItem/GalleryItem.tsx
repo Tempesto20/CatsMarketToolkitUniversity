@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import styles from './galleryItem.module.scss';
 
 export type GalleryItemProps = {
-  id: string;
+  id: number;
   img: string;
 };
 
