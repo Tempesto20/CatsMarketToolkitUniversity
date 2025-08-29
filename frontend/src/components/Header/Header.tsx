@@ -7,8 +7,8 @@ import logoSvg from '../../assets/svg/logo.svg';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import './header.scss';
 
-const headerList = ['Main', 'Gallery', 'News', 'Profile'];
-const listLinks = ['/', '/gallery', '/news', '/profile'];
+const headerList = ['Main', 'Gallery', 'News'];
+const listLinks = ['/', '/gallery', '/news'];
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();

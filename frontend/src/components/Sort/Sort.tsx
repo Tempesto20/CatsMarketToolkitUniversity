@@ -1,5 +1,4 @@
 import React from 'react';
-// import Form from 'react-bootstrap/Form';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/store';
 import { setSortType } from '../../redux/slices/filterSlice';
@@ -25,17 +24,36 @@ const sortList: SortItem[] = [
 const Sort: React.FC = () => {
   const dispatch = useAppDispatch();
   const [sortIsActive, setSortIsActive] = React.useState(false);
-
   const [arrowActive, setArrowActive] = React.useState(false);
   const sortType = useSelector((state: RootState) => state.filterSlice.sort);
 
   const changeHandler = () => {
-    setSortIsActive((sortIsActive) => !sortIsActive); //чтобы открывать и закрывать
+    setSortIsActive((sortIsActive) => !sortIsActive);
     setArrowActive((arrow) => !arrow);
   };
-  const onChangeSortType = (items: any) => {
+
+  const onChangeSortType = (items: SortItem) => {
     dispatch(setSortType(items));
+    setSortIsActive(false); // Закрываем выпадающий список
+    setArrowActive(false); // Возвращаем стрелку в исходное положение
   };
+
+  // Закрытие выпадающего списка при клике вне его области
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const sortElement = document.querySelector('.sort');
+      if (sortElement && !sortElement.contains(event.target as Node)) {
+        setSortIsActive(false);
+        setArrowActive(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="sort">
@@ -65,9 +83,8 @@ const Sort: React.FC = () => {
                   key={index}
                   onClick={() => onChangeSortType(items)}
                   className={sortType.sortProperty === items.sortProperty ? 'active' : ''}>
-                  {/*сравниваем то что у родителя и то, что мы выбрали  */}
                   {items.name}
-                  <img src={items.img} className="arrow"></img>
+                  <img src={items.img} className="arrow" alt={items.name} />
                 </li>
               );
             })}
