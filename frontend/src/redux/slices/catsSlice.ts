@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { SellProps } from './filterSlice';
+// import { SellProps } from './filterSlice';
 
 export type SearchCatsParams = {
   sortBy: string;

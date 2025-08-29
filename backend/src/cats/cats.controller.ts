@@ -43,8 +43,6 @@ export class CatsController {
     }
   }
 
-  
-
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     try {

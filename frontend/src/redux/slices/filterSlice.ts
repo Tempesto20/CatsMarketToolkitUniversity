@@ -1,73 +1,66 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { FilterSliceState, Sort, SortPropertyEnum } from './types';
 
-export type SortProps = {
-  //type - можно передать что угодно, как константа для TS
+export type Sort = {
   name: string;
   sortProperty: string;
+  img: string;
 };
 
-export type SellProps = {
-  //type - можно передать что угодно, как константа для TS
-  name: string;
-  value: number;
-};
-
-export interface FilterItemSlice {
-  //interface - типизирует только объект {}
+interface FilterState {
+  searchValue: string;
+  categoryId: number;
   currentPage: number;
-  // sell: SellProps;
+  sort: Sort;
   sell: number;
-  sort: SortProps;
 }
 
-const initialState = {
+const initialState: FilterState = {
+  searchValue: '',
+  categoryId: 0,
   currentPage: 1,
-  sell: 0,
-  // sell: {
-  //   name: 'Все',
-  //   value: 0,
-  // },
   sort: {
     name: 'сначала взрослые',
     sortProperty: 'age',
+    img: '',
   },
+  sell: 0, // По умолчанию "Все"
 };
 
-const filterSlice = createSlice({
-  name: 'filters',
+export const filterSlice = createSlice({
+  name: 'filter',
   initialState,
   reducers: {
-    setissell(state, action: PayloadAction<number>) {
-      state.sell = action.payload;
+    setCategoryId(state, action: PayloadAction<number>) {
+      state.categoryId = action.payload;
     },
-    // setissell(state, action: PayloadAction<SellProps>) {
-    //   state.sell = action.payload;
-    // },
-    setSortType(state, action: PayloadAction<SortProps>) {
+    setSearchValue(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
+    },
+    setSortType(state, action: PayloadAction<Sort>) {
       state.sort = action.payload;
     },
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload;
     },
-
-    // setFilters(state, action: PayloadAction<FilterItemSlice>) {
-    //   //console.log(action);
-    //   if (Object.keys(action.payload).length) {
-    //     state.currentPage = Number(action.payload.currentPage);
-    //     state.sell = <SellProps>(action.payload.sell);
-    //     state.sort = action.payload.sort;
-    //   } else {
-    //     state.currentPage = 1;
-    //     state.sell = {
-    //       name: 'Все',
-    //       value: 0,
-    //     };
-    //   }
-    // },
+    setSell(state, action: PayloadAction<number>) {
+      state.sell = action.payload;
+    },
+    setFilters(state, action: PayloadAction<FilterState>) {
+      state.currentPage = Number(action.payload.currentPage);
+      state.categoryId = Number(action.payload.categoryId);
+      state.sort = action.payload.sort;
+      state.sell = Number(action.payload.sell); // Правильное преобразование
+    },
   },
 });
 
-export const { setissell, setSortType, setCurrentPage } = filterSlice.actions;
+export const {
+  setCategoryId,
+  setSortType,
+  setCurrentPage,
+  setFilters,
+  setSearchValue,
+  setSell,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;

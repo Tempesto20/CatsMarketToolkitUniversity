@@ -1,54 +1,49 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/store';
-import { setissell } from '../../redux/slices/filterSlice';
+import { setSell, setCurrentPage } from '../../redux/slices/filterSlice';
 import styles from './checkpoint.module.scss';
 
-const checkpointList = ['Все', 'В наличии', 'Отсутсвуют в продаже'];
+interface CheckpointItem {
+  name: string;
+  value: number;
+}
+
+const checkpointList: CheckpointItem[] = [
+  { name: 'Все', value: 0 },
+  { name: 'В наличии', value: 1 },
+  { name: 'Отсутствуют в продаже', value: 2 },
+];
+
 const Checkpoint: React.FC = () => {
   const dispatch = useAppDispatch();
-  // const [value, setValue] = React.useState(0);
   const sell = useSelector((state: RootState) => state.filterSlice.sell);
-  // console.log('sell' + ' ' + sell);
-  // const arr = useSelector((state) => state.catsSlice.items);
-  // console.log(arr);
 
-  const checkboxHandler = (event: any) => {
-    // console.log('event' + ' ' + event.target.value);
-    dispatch(setissell(event.target.value));
-    // dispatch(setissell({
-    //   ...sell,
-    //   sell : event.target.value
-    // }));
+  const checkboxHandler = (value: number) => {
+    dispatch(setSell(value));
+    // Сбрасываем страницу на первую при изменении фильтра
+    dispatch(setCurrentPage(1));
   };
-  // const isRadioSelected = (value: number): boolean => sell === value;
 
   return (
     <div className={styles.background}>
       <div className={styles.container}>
         <div className={styles.wrapper}>
           <p>Группировать по:</p>
-          <div
-            className={styles.eventList}
-            // onChange={checkboxHandler}
-          >
-            {checkpointList.map((item, index) => {
+          <div className={styles.eventList}>
+            {checkpointList.map((item) => {
               return (
-                <label className={styles.eventTitle} key={index} htmlFor={item}>
+                <label className={styles.eventTitle} key={item.value} htmlFor={`radio-${item.value}`}>
                   <input
                     type="radio"
-                    name="radio"
-                    value={index}
-                    onChange={checkboxHandler}
-                    // checked={isRadioSelected(sell)}
-                    // checked={sell === index ? true : false}
-                    // checked={sell === index ? true : sell}
-                    // checked={sell.value === index ? true : sell.value}
-                    // checked={sell.value === item.value}
-                    // checked={sell === index ? true : false}
+                    name="availability-radio"
+                    value={item.value}
+                    onChange={() => checkboxHandler(item.value)}
+                    checked={sell === item.value}
                     className={styles.subtitle}
+                    id={`radio-${item.value}`}
                   />
-                  {item}
+                  {item.name}
                 </label>
               );
             })}
@@ -60,40 +55,3 @@ const Checkpoint: React.FC = () => {
 };
 
 export default Checkpoint;
-
-// type checkpoinImem ={
-//   name:string;
-//   value: number;
-// }
-
-// const checkpointList: checkpoinImem[] = [
-//   { name: 'Все', value: 0 },
-//   { name: 'В наличии', value: 1 },
-//   { name: 'Отсутсвуют в продаже', value: 2 },
-// ];
-
-{
-  /* {checkpointList.map((item, index) => {
-              return (
-                <label className={styles.eventTitle} key={index} htmlFor={item.name}>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value={item.value}
-                    onChange={checkboxHandler}
-                    // checked={sell === index}
-                    // checked={sell.value === index ? true : sell.value}
-                    // checked={sell.value === item.value}
-                    // checked={sell === index ? true : false}
-                    // checked={check.isGoing}
-                    className={styles.subtitle}
-                  />
-                  {item.name}
-                </label>
-              );
-            })} */
-}
-
-{
-  /* <label htmlFor={item.name} className={styles.subtitle}>{item.name}</label> */
-}

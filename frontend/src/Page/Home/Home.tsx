@@ -8,7 +8,6 @@ import CatBlock from '../../components/CatsBlock/CatBlock';
 import Sort from '../../components/Sort/Sort';
 import CartButton from '../../components/CartBlock/CartButton/CartButton';
 import Skeleton from '../../components/CatsBlock/Skeleton';
-
 import styles from './home.module.scss';
 import FavoriteButton from '../../components/FavoriteBlock/FavoriteButton/FavoriteButton';
 import Pagination from '../../components/Pagination/Pagination';
@@ -27,33 +26,57 @@ const Home: React.FC = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const getCats = async () => {
-    const sortBy = sortType.replace('-', '');
-    const order = sortType.includes('-') ? 'asc' : 'desc';
-    const issellParam = sell > 0 ? `issell=${sell}` : '';
+  // const getCats = async () => {
+  //   const sortBy = sortType.replace('-', '');
+  //   const order = sortType.includes('-') ? 'asc' : 'desc';
     
-    dispatch(
-      fetchCats({
-        sortBy,
-        order,
-        currentPage,
-        issell: issellParam,
-      }),
-    );
+  //   // Правильно формируем параметр issell
+  //   let issellParam = '';
+  //   if (sell === 1) {
+  //     issellParam = 'issell=true'; // В наличии
+  //   } else if (sell === 2) {
+  //     issellParam = 'issell=false'; // Отсутствуют
+  //   }
+  //   // Для sell = 0 (Все) не добавляем параметр
+    
+  //   dispatch(
+  //     fetchCats({
+  //       sortBy,
+  //       order,
+  //       currentPage,
+  //       issell: issellParam,
+  //     }),
+  //   );
+  // };
+
+
+const getCats = async () => {
+  const sortBy = sortType.replace('-', '');
+  const order = sortType.includes('-') ? 'asc' : 'desc';
+  
+  const queryParams: any = {
+    sortBy,
+    order,
+    currentPage,
   };
+  
+  // Добавляем issell только если выбрана фильтрация (не "Все")
+  if (sell !== 0) {
+    queryParams.issell = sell;
+  }
+  
+  dispatch(fetchCats(queryParams));
+};
 
   React.useEffect(() => {
     getCats();
   }, [sortType, currentPage, sell]);
 
-  // Исправленная строка - преобразуем id в string если нужно
   const catsArray = cats.map((item) => (
     <CatBlock 
       key={item.id} 
       count={0} 
       {...item} 
-      // id={item.id} // если CatBlock принимает number
-      // или id={item.id.toString()} // если CatBlock принимает string
     />
   ));
 

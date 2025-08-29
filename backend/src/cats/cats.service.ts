@@ -11,6 +11,7 @@ export class CatsService {
     private catsRepository: Repository<Cat>,
   ) {}
 
+
   async findAll(params: SearchCatsParams): Promise<Cat[]> {
     const { sortBy = 'id', order = 'ASC', currentPage = 1, issell } = params;
     const limit = 6;
@@ -18,9 +19,9 @@ export class CatsService {
 
     const queryBuilder = this.catsRepository.createQueryBuilder('cat');
 
-    // Проверяем, что issell является числом, а не пустой строкой
-    if (issell !== undefined && issell !== '' && !isNaN(Number(issell))) {
-      queryBuilder.where('cat.issell = :issell', { issell: Number(issell) });
+    // проверка issellдля number типа
+    if (issell !== undefined && issell !== null) {
+      queryBuilder.where('cat.issell = :issell', { issell: issell });
     }
 
     const orderDirection = order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
@@ -32,6 +33,9 @@ export class CatsService {
 
     return queryBuilder.getMany();
   }
+
+
+
 
 
   // Новый метод для получения всех котов

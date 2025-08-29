@@ -3,6 +3,7 @@
 .background {
   background: #b3a0a0;
 }
+
 .wrapper {
   position: absolute;
   max-width: 400px;
@@ -13,18 +14,43 @@
   margin-left: 20px;
   z-index: 2;
   left: 0px;
+  
+  p {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
 }
+
 .container {
   @media (max-width: $xl) {
     padding-top: 90px;
   }
 }
+
 .eventList {
   display: block;
 }
+
 .eventTitle {
   display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  &:hover {
+    color: #fe5f1e;
+  }
 }
+
 .subtitle {
   margin-right: 10px;
+  cursor: pointer;
+  
+  &:checked {
+    accent-color: #fe5f1e;
+  }
 }
