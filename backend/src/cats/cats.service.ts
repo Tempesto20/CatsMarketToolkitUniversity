@@ -33,6 +33,23 @@ export class CatsService {
     return queryBuilder.getMany();
   }
 
+
+  // Новый метод для получения всех котов
+  async findAllCats(): Promise<Cat[]> {
+    try {
+      return await this.catsRepository.find({
+        order: {
+          id: 'ASC' // Сортировка по ID по возрастанию
+        }
+      });
+    } catch (error) {
+      console.error('Error in findAllCats:', error);
+      throw error;
+    }
+  }
+
+
+
   async findOne(id: number): Promise<Cat> {
     const cat = await this.catsRepository.findOne({ where: { id } });
     

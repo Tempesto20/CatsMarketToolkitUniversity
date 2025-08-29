@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const axiosCats = createAsyncThunk('asyncThunkSlice/axiosCatsStatus', async () => {
-  const { data } = await axios.get(`http://localhost:3000/cats`);
+  const { data } = await axios.get(`http://localhost:3000/cats/fullCat`);
   console.log(data);
   return data as CatsItems[];
 });

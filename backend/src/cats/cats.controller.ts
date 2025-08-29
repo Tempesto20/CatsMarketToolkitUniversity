@@ -31,6 +31,20 @@ export class CatsController {
     }
   }
 
+
+    // Новый маршрут для получения всех котов
+  @Get('fullCat')
+  async findAllCats() {
+    try {
+      return await this.catsService.findAllCats();
+    } catch (error) {
+      console.error('Error in findAllCats:', error);
+      throw error;
+    }
+  }
+
+  
+
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
     try {
