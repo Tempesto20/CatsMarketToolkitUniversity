@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { CartItemSlice, setRemoveItem } from '../../../redux/slices/cartSlice';
-import { setAddLike, setRemoveLike, setLike } from '../../../redux/slices/favoriteSlice';
+import { setAddLike, setRemoveLike } from '../../../redux/slices/favoriteSlice';
 import notLike from '../../../assets/svg/like.svg';
 import Like from '../../../assets/svg/like2.svg';
 import clearCart from '../../../assets/svg/clearCart.svg';
@@ -58,12 +58,11 @@ const CartItem: React.FC<CartItemProps> = ({
       age: 0,
       issell: 0,
     };
-    dispatch(setLike(true));
     dispatch(setAddLike(item));
   };
 
   const handlerLikeNo = () => {
-    dispatch(setLike(false));
+
     if (window.confirm('Вы действительно хотите удалить котика из списка ваших фаворитов?')) {
       dispatch(setRemoveLike(id));
     }

@@ -46,12 +46,8 @@ export const favoriteSlice = createSlice({
       state.items = [];
       state.totalPrice = 0;
     },
-
-    setLike(state, action: PayloadAction<boolean>) {
-      // Логика для установки лайка
-    },
   },
 });
 
-export const { setAddLike, setRemoveLike, setClearLikes, setLike } = favoriteSlice.actions;
+export const { setAddLike, setRemoveLike, setClearLikes } = favoriteSlice.actions;
 export default favoriteSlice.reducer;
