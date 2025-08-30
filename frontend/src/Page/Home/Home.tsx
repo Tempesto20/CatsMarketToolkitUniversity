@@ -1,3 +1,4 @@
+// pages/Home.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,60 +18,35 @@ const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const sortType = useSelector((state: RootState) => state.filterSlice.sort.sortProperty);
   const currentPage = useSelector((state: RootState) => state.filterSlice.currentPage);
-  const cats = useSelector((state: RootState) => state.catsSlice.items);
-  const cart = useSelector((state: RootState) => state.cartSlice.items);
   const sell = useSelector((state: RootState) => state.filterSlice.sell);
+  const cats = useSelector((state: RootState) => state.catsSlice.items);
   const status = useSelector((state: RootState) => state.catsSlice.status);
 
   const onChangePageHandler = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
-  // const getCats = async () => {
-  //   const sortBy = sortType.replace('-', '');
-  //   const order = sortType.includes('-') ? 'asc' : 'desc';
+  const getCats = async () => {
+    const sortBy = sortType.replace('-', '');
+    const order = sortType.includes('-') ? 'asc' : 'desc';
     
-  //   // Правильно формируем параметр issell
-  //   let issellParam = '';
-  //   if (sell === 1) {
-  //     issellParam = 'issell=true'; // В наличии
-  //   } else if (sell === 2) {
-  //     issellParam = 'issell=false'; // Отсутствуют
-  //   }
-  //   // Для sell = 0 (Все) не добавляем параметр
+    const queryParams: any = {
+      sortBy,
+      order,
+      currentPage: currentPage.toString(),
+    };
     
-  //   dispatch(
-  //     fetchCats({
-  //       sortBy,
-  //       order,
-  //       currentPage,
-  //       issell: issellParam,
-  //     }),
-  //   );
-  // };
-
-
-const getCats = async () => {
-  const sortBy = sortType.replace('-', '');
-  const order = sortType.includes('-') ? 'asc' : 'desc';
-  
-  const queryParams: any = {
-    sortBy,
-    order,
-    currentPage,
+    // Добавляем issell только если выбрана фильтрация (не "Все")
+    if (sell !== 0) {
+      queryParams.issell = sell.toString();
+    }
+    
+    dispatch(fetchCats(queryParams));
   };
-  
-  // Добавляем issell только если выбрана фильтрация (не "Все")
-  if (sell !== 0) {
-    queryParams.issell = sell;
-  }
-  
-  dispatch(fetchCats(queryParams));
-};
 
   React.useEffect(() => {
     getCats();
-  }, [sortType, currentPage, sell]);
+  }, [sortType, currentPage, sell]); // Добавляем sell в зависимости
 
   const catsArray = cats.map((item) => (
     <CatBlock 

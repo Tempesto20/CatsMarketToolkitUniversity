@@ -6,24 +6,29 @@ export type SearchCatsParams = {
   sortBy: string;
   order: string;
   currentPage: number;
-  issell: string | number;
+  issell: number;
 };
+
+
 
 export const fetchCats = createAsyncThunk(
   'cats/fetchCatsStatus',
   async (params: SearchCatsParams) => {
     const { sortBy, order, currentPage, issell } = params;
     
-    // Убедитесь, что issell передается как число, а не как строка
-    const issellParam = issell === 'all' || issell === '' ? undefined : Number(issell);
+    // Преобразуем параметры в нужный формат
+    const queryParams: any = {
+      sortBy,
+      order,
+      currentPage: Number(currentPage),
+    };
+    
+    if (issell) {
+      queryParams.issell = issell;
+    }
     
     const { data } = await axios.get(`http://localhost:3000/cats`, {
-      params: {
-        sortBy,
-        order,
-        currentPage,
-        issell: issellParam
-      }
+      params: queryParams
     });
     
     console.log('Response data:', data);

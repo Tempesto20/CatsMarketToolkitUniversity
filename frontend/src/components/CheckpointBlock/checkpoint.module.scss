@@ -1,56 +1,157 @@
 @import '../../scss/config';
 
-.background {
-  background: #b3a0a0;
-}
-
-.wrapper {
+.checkpoint {
   position: absolute;
-  max-width: 400px;
-  border: 1px solid #000000;
-  border-radius: 50px;
-  box-shadow: 12px 12px 2px 1px rgba(220, 210, 22, 0.2);
-  padding: 20px 20px;
-  margin-left: 20px;
+  left: 100px;
   z-index: 2;
-  left: 0px;
   
-  p {
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-}
-
-.container {
   @media (max-width: $xl) {
-    padding-top: 90px;
+    left: 0px;
+    margin-top: 90px;
+  }
+  
+  @media (max-width: $lg) {
+    left: 0px;
+  }
+  
+  // @media (max-width: $md) {
+  //   left: 200px;
+  //   margin-top: 0;
+  // }
+  
+  // @media (max-width: $sm) {
+  //   position: relative;
+  //   left: 0;
+  //   margin-top: 20px;
+  //   margin-left: 20px;
+  // }
+}
+
+.checkpoint__label {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  b {
+    margin-right: 8px;
+    font-weight: bold;
+    // font-size: 14px;
+    // line-height: 17px;
+    letter-spacing: 0.015em;
+    color: #2C2C2C;
+  }
+
+    span {
+      color: blue($color: #000000);
+      border-bottom: 1px dashed;
+      cursor: pointer;
+    }
+  
+}
+
+.checkpoint__popup {
+  position: absolute;
+  right: 0;
+  margin-top: 15px;
+  background: #ffffff;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px 0;
+  width: 200px;
+  z-index: 100;
+
+  ul {
+    overflow: hidden;
+
+    li {
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: 0.015em;
+      
+
+      &.active,
+      &:hover {
+        background: rgba(254, 95, 30, 0.05);
+      }
+
+      &.active {
+        font-weight: bold;
+        color: #fe5f1e;
+      }
+          span {
+      color: blue($color: #000000);
+      border-bottom: 1px dashed;
+      cursor: pointer;
+    }
+    }
   }
 }
 
-.eventList {
-  display: block;
+.transform {
+  transform: rotate(180deg);
 }
 
-.eventTitle {
-  display: block;
-  margin-bottom: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  
-  &:last-child {
-    margin-bottom: 0;
-  }
-  
-  &:hover {
-    color: #fe5f1e;
+// Медиа-запросы для адаптивности
+@media (max-width: $xl) {
+  .checkpoint {
+
+    left: 30px;
   }
 }
 
-.subtitle {
-  margin-right: 10px;
-  cursor: pointer;
-  
-  &:checked {
-    accent-color: #fe5f1e;
+@media (max-width: $lg) {
+  .checkpoint {
+        // padding-top: 90px;
+    left: 30px;
   }
+  
+  // .checkpoint__label {
+  //   b {
+  //     font-size: 13px;
+  //   }
+    
+  //   span {
+  //     font-size: 13px;
+  //   }
+  // }
 }
+
+@media (max-width: $md) {
+  .checkpoint {
+    left: 30px;
+  }
+  
+  // .checkpoint__popup {
+  //   // width: 180px;
+    
+  //   ul li {
+  //     padding: 10px 15px;
+  //     font-size: 13px;
+  //   }
+  // }
+}
+
+// @media (max-width: $sm) {
+//   .checkpoint {
+//     position: relative;
+//     left: 0;
+//     margin: 20px 0;
+    
+//     &__popup {
+//       position: fixed;
+//       top: 50%;
+//       left: 50%;
+//       transform: translate(-50%, -50%);
+//       width: 80%;
+//       max-width: 250px;
+//       margin-top: 0;
+//     }
+//   }
+// }
