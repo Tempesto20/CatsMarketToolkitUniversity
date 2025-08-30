@@ -5,7 +5,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   border-color: #000000;
-
   margin: auto;
 }
 
@@ -13,8 +12,10 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .card {
   margin: 0px 0px 40px 20px;
+  
   @media (max-width: $xl) {
     margin: 0px 20px 27px 40px;
   }
@@ -25,45 +26,83 @@
     margin: 0px 10px 27px 20px;
   }
 }
+
 .card__img {
   position: relative;
   cursor: pointer;
-}
-.card__cat-img {
   width: 380px;
   height: 253px;
-  margin-bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  
   @media (max-width: $xl) {
-    height: 100%;
     width: 300px;
+    height: 200px;
   }
   @media (max-width: $lg) {
-    height: 100%;
     width: 380px;
+    height: 253px;
   }
   @media (max-width: $sm) {
-    height: 100%;
     width: 250px;
+    height: 167px;
   }
 }
+
+.card__cat-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 0px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card__img:hover .card__cat-img {
+  transform: scale(1.05);
+}
+
+// Эффект расширения фона изображения
+.card__img::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(8px) brightness(1.1);
+  opacity: 0.7;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card__img:hover::before {
+  opacity: 0.8;
+}
+
 //Tempesto20
 .card__discount {
   position: absolute;
-  top: 34px;
-  left: 50px;
+  top: 15px;
+  left: 15px;
+  z-index: 3;
+  
   @media (max-width: $xl) {
-    top: 14px;
-    left: 30px;
-  }
-  @media (max-width: $lg) {
-    top: 34px;
-    left: 60px;
-  }
-  @media (max-width: $sm) {
-    top: 14px;
-    left: 30px;
+    top: 10px;
+    left: 10px;
   }
 }
+
 .discount {
   font-size: 16px;
   line-height: 20px;
@@ -71,30 +110,43 @@
   background: #e52d2d;
   padding: 8px 10px;
   border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
+
 .card__like {
   position: absolute;
-  top: 37px;
-  right: 32px;
+  top: 15px;
+  right: 15px;
+  z-index: 3;
+  // background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+  
   @media (max-width: $xl) {
-    top: 14px;
-    right: 30px;
-  }
-  @media (max-width: $lg) {
-    top: 30px;
-    left: 310px;
-    right: 0px;
-  }
-  @media (max-width: $sm) {
-    top: 14px;
-    left: 180px;
+    top: 10px;
+    right: 10px;
   }
 }
+
+.card__like:hover {
+  // background: rgba(255, 255, 255, 1);
+}
+
+.card__like img {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
 .card__like img path {
   fill: #fff;
 }
+
 .card__background {
   background: #f3f3f3;
+  border-radius: 0 0 10px 10px;
+  
   @media (max-width: $lg) {
     max-width: 380px;
   }
@@ -102,6 +154,7 @@
     width: 250px;
   }
 }
+
 .card__title {
   cursor: pointer;
   font-weight: bold;
@@ -111,6 +164,7 @@
   white-space: nowrap;
   padding: 29px 0px 22px 29px;
   margin-top: 0px;
+  
   @media (max-width: $xl) {
     padding: 20px 0px 16px 10px;
   }
@@ -118,12 +172,15 @@
     padding: 20px 0px 16px 10px;
   }
 }
+
 .card__cat-row {
   display: flex;
   flex-direction: row;
 }
+
 .line {
   margin: 0px 18px 26px 29px;
+  
   @media (max-width: $xl) {
     margin: 0px 14px 20px 10px;
   }
@@ -131,25 +188,30 @@
     margin: 0px 7px 20px 10px;
   }
 }
+
 .color__cat {
   font-size: 12px;
   line-height: 15px;
   color: #000000;
   margin: 0px 20px 0px 0px;
+  
   @media (max-width: $sm) {
     margin: 0px 10px 0px 0px;
   }
 }
+
 .cat_year {
   display: flex;
   flex-direction: column;
 }
+
 .years__cat {
   font-weight: bold;
   font-size: 16px;
   line-height: 20px;
   color: #000000;
   margin: 0px 48px 0px 0px;
+  
   @media (max-width: $xl) {
     margin: 0px 24px 0px 0px;
   }
@@ -158,26 +220,31 @@
     line-height: 16px;
   }
 }
+
 .years__cat-1 {
   font-size: 12px;
   line-height: 15px;
   color: #000000;
   margin: 0px 12px 0px 0px;
 }
+
 .cat__quantity {
   display: flex;
   flex-direction: column;
 }
+
 .old__cat {
   font-weight: bold;
   font-size: 16px;
   line-height: 20px;
   color: #000000;
+  
   @media (max-width: $sm) {
     font-size: 12px;
     line-height: 16px;
   }
 }
+
 .quantity__cat {
   font-weight: normal;
   font-size: 12px;
@@ -193,6 +260,7 @@
   color: #000000;
   white-space: nowrap;
   padding: 0px 0px 29px 29px;
+  
   @media (max-width: $xl) {
     padding: 0px 0px 20px 10px;
   }
@@ -200,6 +268,7 @@
     padding: 0px 10px 20px 10px;
   }
 }
+
 //Tempesto20
 .buy__cat {
   cursor: pointer;
@@ -207,15 +276,18 @@
   padding: 22px 56px 22px 56px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
+  
   @media (max-width: $lg) {
     max-width: 380px;
   }
   @media (max-width: $sm) {
     width: 250px;
   }
+  
   & a {
     text-decoration: none;
     margin-left: 100px;
+    
     @media (max-width: $xl) {
       margin-left: 70px;
     }
@@ -226,6 +298,7 @@
       margin-left: 30px;
     }
   }
+  
   a:hover {
     color: #6ebbd3;
   }
@@ -238,6 +311,7 @@
   margin: auto;
   width: 380px;
   background: #1f2021;
+  
   @media (max-width: $xl) {
     width: 300px;
   }
@@ -263,6 +337,7 @@
   margin-top: 0px;
   margin: auto;
   width: 380px;
+  
   @media (max-width: $xl) {
     width: 300px;
   }
@@ -278,15 +353,14 @@ button.buy {
   font-weight: 600;
   color: #382b22;
   text-transform: uppercase;
-
   padding: 20px 40px;
-
   background: #6ebbd3;
   border: 2px solid #6ebbd3;
   border-radius: 0.75em;
   transition: transform 0.15s;
   transform-style: preserve-3d;
 }
+
 button.buy::before {
   position: absolute;
   content: '';
@@ -307,14 +381,17 @@ button.buy:hover {
   background: #4bc9f0;
   transform: translate(0, 0.25em);
 }
+
 button.buy:hover::before {
   box-shadow: 0 0 0 2px #2f00ff, 0 0.5em 0 0 #5517ff;
   transform: translate3d(0, 0.5em, -1em);
 }
+
 button.buy:active {
   background: #6ebbd3;
   transform: translate(0em, 0.75em);
 }
+
 button.buy:active::before {
   box-shadow: 0 0 0 2px #0024f1, 0 0 #5517ff;
   transform: translate3d(0, 0, -1em);
