@@ -1,15 +1,15 @@
 @import '../../../../scss/config';
 
 .imgCat {
-  max-width: 800px;
+  max-width: 600px;
   height: 100%;
   margin: 0 auto;
   @media (max-width: $lg) {
-    max-width: 600px;
+    max-width: 400px;
     padding-bottom: 40px;
   }
   @media (max-width: $md) {
-    max-width: 480px;
+    max-width: 400px;
   }
   @media (max-width: $sm) {
     max-width: 300px;
